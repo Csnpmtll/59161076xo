@@ -9,7 +9,7 @@ const getBoard = () => {
         7: '7', 8: '8', 9: '9'
     }
 }
-
+var time =0;
 class TicTacToe {
     constructor() {
         this.winningLines = [
@@ -38,6 +38,9 @@ class TicTacToe {
                 this.printBoard()
                 console.log(`${this.currentPlayer} Name : ${this.players[this.currentPlayer].name} Win! `)
                 return
+            } else if(time===9){
+                console.log("!!!!!!  Draw  !!!!!!")
+                return
             } else {
                 this.switchPlayer()
             }this.start()
@@ -46,7 +49,18 @@ class TicTacToe {
     }
 
     setBoard(location) {
-        this.board[location] = this.currentPlayer
+        if(location>=1 && location<=9){
+            if(this.board[location]==="X" || this.board[location]==="O"){
+                console.log("This location is already used.")
+                this.switchPlayer()
+            }else{
+                time=time+1
+                this.board[location] = this.currentPlayer
+            }
+        }else{
+            console.log("This location is over the limit")
+            this.switchPlayer()
+        }
     }
 
     switchPlayer() {
@@ -56,7 +70,6 @@ class TicTacToe {
             this.currentPlayer = 'X'
         }
     }
-
     checkWin() {
         let checker = 0;
         for(let i=0; i < this.winningLines.length; i++) {
